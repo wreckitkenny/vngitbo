@@ -4,6 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 import { Card, CardHeader, Box } from '@mui/material';
 // components
 import { useChart } from '../../../components/chart';
+import { fDate } from '../../../utils/formatTime';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +27,7 @@ export default function AppWebsiteVisits({ title, subheader, chartLabels, chartD
       y: {
         formatter: (y) => {
           if (typeof y !== 'undefined') {
-            return `${y.toFixed(0)} changes`;
+            return `${y.toFixed(0)} times`;
           }
           return y;
         },
@@ -39,7 +40,7 @@ export default function AppWebsiteVisits({ title, subheader, chartLabels, chartD
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
-        <ReactApexChart type="line" series={chartData} options={chartOptions} height={364} />
+        <ReactApexChart type="line" series={chartData} options={chartOptions} height={300} />
       </Box>
     </Card>
   );

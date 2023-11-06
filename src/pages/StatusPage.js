@@ -2,7 +2,9 @@ import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 // @mui
 import {
   Card,
@@ -24,8 +26,11 @@ import {
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
+import { logout } from '../actions/auth';
+import { API_URL } from "../constants/api";
 // sections
-import { StatusListHead, StatusListToolbar } from '../sections/@dashboard/user';
+import { StatusListHead, StatusListToolbar } from '../sections/@dashboard/user'
+
 
 // ----------------------------------------------------------------------
 
@@ -90,27 +95,20 @@ function applySortFilter(array, comparator, field, query) {
 }
 
 export default function StatusPage() {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-
   const [page, setPage] = useState(0);
-
   const [order, setOrder] = useState('desc');
-
   const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('time');
-
   const [keyword, setKeyword] = useState('');
-
   const [field, setField] = useState('image');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const [stateList, setStateList] = useState([]);
-
   const [hoverContent, setHoverContent] = useState('N/A');
-
+  const { user } = useSelector(state => state.auth);
   const open = Boolean(anchorEl);
+  const { enqueueSnackbar } = useSnackbar();
 
   const fieldFromToolbar = (field) => {
     setField(field);
@@ -176,10 +174,32 @@ export default function StatusPage() {
   const isNotFound = !filteredUsers.length && !!keyword;
 
   useEffect(() => {
-    axios.get("http://localhost:8000/loadState").then((response) => {
+    axios({
+      method: "get",
+      url: `${API_URL}/loadState`,
+      headers: {
+        "Authorization": `Bearer ${user.token}`
+      },
+      timeout: 3000
+    })
+    .then((response) => {
       setStateList(response.data)
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        console.log("Token expired. Please login again.")
+        dispatch(logout());
+        enqueueSnackbar("Token expired. Please login again.", { variant: "error" });
+      }
     });
+    // eslint-disable-next-line
   }, []);
+
+  // if (Math.floor(Date.now() / 1000) > jwt(user.token).exp) {
+  //   dispatch(logout());
+  //   enqueueSnackbar("Token expired. Please login again.", { variant: "error" });
+  //   return <Navigate to="login" />
+  // }
 
   return (
     <>

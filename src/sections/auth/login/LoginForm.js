@@ -29,17 +29,16 @@ export default function LoginForm() {
     dispatch(login(data.get('email'), data.get('password')))
       .then(() => {
         enqueueSnackbar("Login successfully.", { variant: "success" });
-        navigate("/status");
+        navigate("/dashboard");
       })
       .catch(() => {
         setLoading(false);
         enqueueSnackbar("Incorrect login credentials. Please try again.", { variant: "error" });
       });
-
   };
 
   if (isLoggedIn) {
-    return <Navigate to="/status" />
+    return <Navigate to="/dashboard" />
   }
 
   return (
