@@ -12,7 +12,7 @@ const user = JSON.parse(localStorage.getItem("auth"));
 
 const initialState = user
   ? { isLoggedIn: true, user, userinfo: jwt(user.token) }
-  : { isLoggedIn: false, user: {"token":""}, userinfo: null };
+  : { isLoggedIn: false, user: null, userinfo: null };
 
 const authReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -38,13 +38,13 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: false,
-        user: {"token":""},
+        user: null,
       };
     case LOGOUT:
       return {
         ...state,
         isLoggedIn: false,
-        user: {"token":""},
+        user: null,
       };
     default:
       return state;

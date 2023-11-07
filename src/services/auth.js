@@ -17,6 +17,7 @@ const login = async (username, password) => {
 
 const logout = () => {
   localStorage.removeItem("auth");
+  localStorage.removeItem("statistic");
 };
 
 export default {

@@ -195,12 +195,6 @@ export default function StatusPage() {
     // eslint-disable-next-line
   }, []);
 
-  // if (Math.floor(Date.now() / 1000) > jwt(user.token).exp) {
-  //   dispatch(logout());
-  //   enqueueSnackbar("Token expired. Please login again.", { variant: "error" });
-  //   return <Navigate to="login" />
-  // }
-
   return (
     <>
       <Helmet>
@@ -212,9 +206,6 @@ export default function StatusPage() {
           <Typography variant="h4" gutterBottom>
             Tag Change Log
           </Typography>
-          {/* <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button> */}
         </Stack>
 
         <Card>

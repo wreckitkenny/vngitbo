@@ -1,25 +1,17 @@
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
-import { Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
-import Iconify from '../components/iconify';
 import { statistic } from '../actions/statistic';
+import { logout } from '../actions/auth';
 // sections
 import {
-  AppTasks,
-  AppNewsUpdate,
-  AppOrderTimeline,
-  AppCurrentVisits,
   AppWebsiteVisits,
-  AppTrafficBySite,
   AppWidgetSummary,
-  AppCurrentSubject,
-  AppConversionRates,
 } from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
@@ -27,16 +19,17 @@ import {
 export default function Dashboard() {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { isLoggedIn, user } = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.auth);
   const { stat } = useSelector(state => state.statistic);
-  // const history = useHistory();
-
-  // if (!isLoggedIn) {
-  //   return <Navigate to="/" />;
-  // }
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     dispatch(statistic(user.token))
+    .catch(() => {
+      console.log("Token expired. Please login again.")
+      dispatch(logout());
+      enqueueSnackbar("Token expired. Please login again.", { variant: "error" });
+    });
     // eslint-disable-next-line
   }, []);
 
@@ -53,11 +46,11 @@ export default function Dashboard() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Today" total={stat.today} icon={'gg:calendar-today'} />
+            <AppWidgetSummary title="Today" total={stat ? stat.today : "N/A"} icon={'gg:calendar-today'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total" total={stat.total} color="info" icon={'fluent-mdl2:total'} />
+            <AppWidgetSummary title="Total" total={stat ? stat.total : "N/A"} color="info" icon={'fluent-mdl2:total'} />
           </Grid>
 
           {/* <Grid item xs={12} sm={6} md={3}>
@@ -76,7 +69,7 @@ export default function Dashboard() {
             <AppWebsiteVisits
               title="Image Change Graph"
               subheader="The last two weeks"
-              chartLabels={stat.graph.date}
+              chartLabels={stat ? stat.graph.date : []}
               chartData={[
                 // {
                 //   name: 'Team A',
@@ -94,7 +87,7 @@ export default function Dashboard() {
                   name: 'Changes',
                   type: 'line',
                   fill: 'solid',
-                  data: stat.graph.count,
+                  data: stat ? stat.graph.count : [],
                 },
               ]}
             />
