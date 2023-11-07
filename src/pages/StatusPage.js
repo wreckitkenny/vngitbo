@@ -27,7 +27,7 @@ import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import { logout } from '../actions/auth';
-import { API_URL } from "../constants/api";
+import { API_URL, REQUEST_TIMEOUT } from "../constants/api";
 // sections
 import { StatusListHead, StatusListToolbar } from '../sections/@dashboard/user'
 
@@ -180,7 +180,7 @@ export default function StatusPage() {
       headers: {
         "Authorization": `Bearer ${user.token}`
       },
-      timeout: 3000
+      timeout: REQUEST_TIMEOUT
     })
     .then((response) => {
       setStateList(response.data)
