@@ -2,7 +2,6 @@
 import {
     GET_STATISTIC_SUCCESS,
     GET_STATISTIC_FAILED,
-    SET_MESSAGE,
     LOGOUT
 } from "../constants/types";
 import StatisticService from "../services/statistic";

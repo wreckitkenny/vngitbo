@@ -37,6 +37,7 @@ StatusListToolbar.propTypes = {
   numSelected: PropTypes.number,
   keyword: PropTypes.string,
   setKeyword: PropTypes.func,
+  setPage: PropTypes.func,
   onKeyword: PropTypes.func,
   fieldFromToolbar: PropTypes.func,
 };

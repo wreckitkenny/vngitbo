@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
 import { statistic } from '../actions/statistic';
@@ -17,7 +16,6 @@ import {
 // ----------------------------------------------------------------------
 
 export default function Dashboard() {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
   const { stat } = useSelector(state => state.statistic);

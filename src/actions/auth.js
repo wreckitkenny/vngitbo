@@ -9,6 +9,7 @@ import {
 } from "../constants/types";
 import AuthService from "../services/auth";
 
+// eslint-disable-next-line
 export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
     (data) => {

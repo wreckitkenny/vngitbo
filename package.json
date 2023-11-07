@@ -1,9 +1,9 @@
 {
   "name": "@minimal/material-kit-react",
-  "author": "minimals.cc",
-  "licence": "MIT",
-  "version": "1.7.0",
-  "private": false,
+  "author": "tungtt4@vnpay.vn",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": "http://vngitbot-bo.vnpay.local/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
