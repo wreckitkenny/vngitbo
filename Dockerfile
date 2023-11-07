@@ -1,10 +1,8 @@
 FROM node:18-alpine as build
 WORKDIR /app
 COPY package.json ./
-RUN npm config set registry https://artifact.vnpay.vn/nexus/repository/npm-group/
-RUN npm install --save --legacy-peer-deps
-COPY . ./
-RUN npm run build:test
+RUN yarn install
+RUN yarn build
 
 FROM nginx:stable-alpine
 WORKDIR /app
