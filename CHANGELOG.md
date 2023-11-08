@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.2] | 2023-11-08
+### Added/Removed
+### Changed
+- Changed scheme from http to https
+### Fixed
+
 ## [1.0.1] | 2023-11-07
 ### Added/Removed
 - Added .env
